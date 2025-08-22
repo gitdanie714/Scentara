@@ -1,0 +1,11 @@
+/* .landing-container {
+  display: grid;
+  grid-template-areas:
+    "navbar navbar navbar"
+    "header header header"
+    "product product product"
+    "seller seller seller"
+    "review review review"
+    "footer footer footer";
+  grid-template-rows: 100px auto 1fr 1.5fr auto auto;
+} */
