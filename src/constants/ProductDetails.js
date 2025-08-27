@@ -52,8 +52,7 @@ const productDetails = [
     description: "  250ml - Perfume Water",
     category : "Flower Fragrance",
     price: 300.99,
-    image: img1,
-    rate:5
+    image: img1
   },
   {
     id: 8,
@@ -62,7 +61,6 @@ const productDetails = [
     category : "Premium Perfume",
     price: 400.99,
     image: img2,
-    rate:5
   },
   {
     id: 9,
@@ -81,7 +79,7 @@ const productDetails = [
     price: 365.00,
     image: img4,
     rate:4
-  },
+  }
   // {
   //   id: 11,
   //   name: "Protective Styling Gel",

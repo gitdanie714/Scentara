@@ -11,6 +11,7 @@ import '../styles/LandingPage.css'
 import CartModal from '../components/CartModal'
 import '../styles/modal.css'
 import BestSellers from '../components/ProductInfo'
+import ProductDisplay from '../components/ProductDisplay'
 
 function LandingPage() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -63,13 +64,14 @@ const cartItems = JSON.parse(localStorage.getItem('cartItems'));
     // </div>
 
     //Tailwind version
-    <div className="grid grid-rows-[200px 1fr oi,jkjkjjjkjijjhjhjhhgbhbhgggggggggggggggggggggggggg//i9kjokiiiuiuiuiijiuhuhyhyhhkguhfhuuuhuhunafda 1fr 1fr 100px] overflow-x-hidden ">
+    <div className="grid grid-rows-[200px 1fr, 1fr, 1fr 100px] w-full">
     <Navbar className="row-[1]" openCart={openCart}/>
     <Header className="row-[2]"/>
     <ProductInfo className="row-[4]" openCart={openCart}/>
     <BestSellers className="row-[3]"/>
-    <Reviews className="row-[5]"/>
-    <Footer className="row-[6]"/>
+    <ProductDisplay className="row-[5]"/>
+    <Reviews className="row-[6]"/>
+    <Footer className="row-[7]"/>
     <CartModal
       modalState={isCartOpen} 
       onRequestClose={closeCart}

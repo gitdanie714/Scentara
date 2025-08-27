@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 function Navbar() { 
    const navigate = useNavigate(); 
   return (
-    <div className='navbar flex justify-between p-4 bg-pink border-b-2 border-darkred shadow-md'>
+    <div className='navbar max-w-full object-cover flex justify-between p-4 bg-pink border-b-2 border-darkred shadow-md'>
       <div className='navbar-logo flex text-darkred font-bold text-2xl cursor-pointer gap-2' onClick={() => navigate("/")}>
         <span>Scentara</span> 
         <GiFlowers className='flex items-center' />
@@ -26,7 +26,7 @@ function Navbar() {
           <li><a href="/shop">Shop</a></li>
         </ul>
     </div>
-    <div className="flex items-center ">
+    <div className="flex items-center max-w-7xl mx-auto px-4">
       <HiShoppingBag className='text-darkred text-2xl mx-3 hover:stroke-white-700' onClick={()=> navigate("/checkout")} />
       <HiOutlineUser className='text-darkred text-2xl mx-3 hover:stroke-white-700'   />
     </div>

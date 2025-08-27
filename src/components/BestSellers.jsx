@@ -50,7 +50,7 @@ function BestSellers({openCartModal}) {
   }
 
   return (
-    <div className="seller-area ">
+    <div className="seller-area max-w-full object-cover">
       <div className="bestseller">
         <div className='flex-cols items-center bg-darkred p-4 m-4 rounded-lg shadow-lg'>
           <h1 className='text-pink text-5xl text-center font-bold'><span>BestSellers</span></h1>
