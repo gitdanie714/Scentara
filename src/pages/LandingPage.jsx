@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../components/Header'
-import ProductInfo from '../components/ProductInfo'
+import ProductInfo from '../components/BestSellers'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Reviews from '../components/Reviews'
@@ -10,7 +10,7 @@ import '../styles/componentstyle.css'
 import '../styles/LandingPage.css'
 import CartModal from '../components/CartModal'
 import '../styles/modal.css'
-import BestSellers from '../components/BestSellers'
+import BestSellers from '../components/ProductInfo'
 
 function LandingPage() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -63,11 +63,11 @@ const cartItems = JSON.parse(localStorage.getItem('cartItems'));
     // </div>
 
     //Tailwind version
-    <div className="grid grid-rows-[100px 1fr 1fr 1fr 1fr 100px] ">
+    <div className="grid grid-rows-[200px 1fr oi,jkjkjjjkjijjhjhjhhgbhbhgggggggggggggggggggggggggg//i9kjokiiiuiuiuiijiuhuhyhyhhkguhfhuuuhuhunafda 1fr 1fr 100px] overflow-x-hidden ">
     <Navbar className="row-[1]" openCart={openCart}/>
     <Header className="row-[2]"/>
-    <ProductInfo className="row-[3]"/>
-    <BestSellers className="row-[4]" openCart={openCart}/>
+    <ProductInfo className="row-[4]" openCart={openCart}/>
+    <BestSellers className="row-[3]"/>
     <Reviews className="row-[5]"/>
     <Footer className="row-[6]"/>
     <CartModal

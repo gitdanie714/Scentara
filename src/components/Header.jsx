@@ -15,8 +15,6 @@ function Header() {
         <div className='header-image'>
           <img src={logo} alt='Floral Header' className='w-96 h-auto flex items-center justify-center '/>
         </div>
-
-    
     </div>
   )
 }

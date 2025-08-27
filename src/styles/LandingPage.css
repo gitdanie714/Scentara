@@ -9,3 +9,14 @@
     "footer footer footer";
   grid-template-rows: 100px auto 1fr 1.5fr auto auto;
 } */
+ .bestseller-scroll {
+  scroll-behavior: smooth;
+}
+.bestseller-scroll::-webkit-scrollbar {
+  height: 8px;
+  background: #f3f3f3;
+}
+.bestseller-scroll::-webkit-scrollbar-thumb {
+  background: #e75480;
+  border-radius: 4px;
+}
