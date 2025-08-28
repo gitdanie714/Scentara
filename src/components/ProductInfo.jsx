@@ -1,50 +1,57 @@
 import React from 'react'
-import "../styles/componentstyle.css"
-import img2 from '../images/img2.jpg'
-import { FaStar } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom'
 import productimg from '../images/prada.jpeg'
-import productDetails from '../constants/ProductDetails';
 
 function ProductInfo() {
-
-  const navigate = useNavigate(); 
-
   return (
-
-    <div className='bg-white p-4 m-4 rounded-lg shadow-lg w-screen h-auto justify-center items-center'>
-
+    <div className="bg-white p-6 m-6 w-screen h-auto">
+      
       {/* Grid container */}
-      <div className='grid grid-cols-5 gap-6 bg-slate-500 p-10'>
+      <div className="grid grid-cols-3 gap-6 bg-slate-100 p-6 rounded-lg">
 
-        {/* Left side image */}
-        <div className='bg-blue-200 bg-opacity-80 p-4 rounded-lg shadow-lg flex items-center justify-center'>
+        {/* Left main product image */}
+        <div className="bg-blue-200 bg-opacity-80 rounded-lg shadow-lg flex items-center justify-center">
           <img 
             src={productimg} 
             alt="Main Product" 
-            className='w-full h-full object-cover rounded-lg'
+            className="w-full h-full object-cover rounded-lg"
           />
         </div>
 
-        {/* Right side two stacked items */}
-        <div className='col-span-2 grid grid-rows-2 gap-6'>
+        {/* Right categories (two stacked) */}
+        <div className="col-span-2 grid grid-rows-2 gap-6">
 
-          <div className='bg-darkred bg-opacity-80 p-4 rounded-lg shadow-lg flex flex-col items-center'>
+          {/* Category card */}
+          <div className="relative group bg-darkred bg-opacity-80 p-4 rounded-lg shadow-lg flex flex-col items-center cursor-pointer">
             <img 
               src={productimg} 
               alt="Floral Scents" 
-              className='w-full h-56 object-cover rounded-md'
+              className="w-full h-56 object-cover rounded-md"
             />
             <h1 className="mt-2 text-white font-semibold">Floral Scents</h1>
+
+            {/* Hover explanation */}
+            <div className="absolute inset-0 bg-black bg-opacity-70 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+              <p className="text-white text-center px-4">
+                Fresh floral fragrances perfect for everyday elegance.
+              </p>
+            </div>
           </div>
 
-          <div className='bg-darkred bg-opacity-80 p-4 rounded-lg shadow-lg flex flex-col items-center'>
+          {/* Second category card */}
+          <div className="relative group bg-darkred bg-opacity-80 p-4 rounded-lg shadow-lg flex flex-col items-center cursor-pointer">
             <img 
               src={productimg} 
               alt="Wood Fragrance" 
-              className='w-full h-56 object-cover rounded-md'
+              className="w-full h-56 object-cover rounded-md"
             />
             <h1 className="mt-2 text-white font-semibold">Wood Fragrance</h1>
+
+            {/* Hover explanation */}
+            <div className="absolute inset-0 bg-black bg-opacity-70 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+              <p className="text-white text-center px-4">
+                Rich woody tones that embody warmth and sophistication.
+              </p>
+            </div>
           </div>
 
         </div>

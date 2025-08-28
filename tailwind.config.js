@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         darkred: '#66021f',
+        opacitydarkred: '#4b0017',
         pink: '#FFF9FB',
         opacitypink: '#efe4e6',
         accent: '#F5A623',
@@ -18,6 +19,13 @@ module.exports = {
         warning: '#F39C12',
         info: '#3498DB',
     },
+      fontFamily: {
+        sans: ['Helvetica', 'Arial', 'sans-serif'],
+        serif: ['Georgia', 'serif'],
+        mono: ['Courier New', 'monospace'],
+      },
+       
+
   },
   plugins: [],
 }

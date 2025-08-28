@@ -4,37 +4,14 @@ import ReactModal from 'react-modal'
 import '../styles/modal.css' 
 import { useNavigate } from 'react-router-dom'
 import productDetails from '../constants/ProductDetails'
-import ProductDescription from '../pages/ProductDescription'
 import { FaStar } from "react-icons/fa";
 
-function BestSellers({openCartModal}) {
-      const navigate = useNavigate();
-  ReactModal.setAppElement('#root') // Set the app element for accessibility
+function BestSellers({ openCartModal }) {
+  const navigate = useNavigate();
+  ReactModal.setAppElement('#root') 
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
-
-  setTimeout(() => {
-    setModalIsOpen(false)
-  },5000);
-
-  const addQuantity = (product) => {
-    setSelectedProduct(prev => {
-      if (prev && prev.id === product.id) {
-        return { ...prev, quantity: prev.quantity + 1 }
-      }
-      return { ...product, quantity: 1 }
-    })
-  }
-
-  const removeQuantity = (product) => {
-    setSelectedProduct(prev => {
-      if (prev && prev.id === product.id && prev.quantity > 0) {
-        return { ...prev, quantity: prev.quantity - 1 }
-      }
-      return { ...product, quantity: 1 }
-    })
-  }
 
   const AddtoCart = (product) => {
     setSelectedProduct({ ...product, quantity: 1 })
@@ -53,34 +30,50 @@ function BestSellers({openCartModal}) {
     <div className="seller-area max-w-full object-cover">
       <div className="bestseller">
         <div className='flex-cols items-center bg-darkred p-4 m-4 rounded-lg shadow-lg'>
-          <h1 className='text-pink text-5xl text-center font-bold'><span>BestSellers</span></h1>
-          <div className='w-28 h-1 bg-pink items-center mx-auto my-2 '></div>
+          <h1 className='text-pink text-5xl text-center font-bold'>
+            <span>BestSellers</span>
+          </h1>
+          <div className='w-28 h-1 bg-pink items-center mx-auto my-2'></div>
         </div>
+
+        {/* Scrollable/Sliding Section */}
         <div
           className="bestseller-scroll flex overflow-x-auto gap-6 py-4 px-2"
           style={{
             scrollSnapType: "x mandatory",
-            scrollbarWidth: "thin"
+            scrollBehavior: "smooth",   // 👈 Smooth sliding
+            scrollbarWidth: "none"      // 👈 hide scrollbar (Firefox)
           }}
         >
           {productDetails.map(product => (
             <div
               key={product.id}
-              className="bestseller-item flex flex-col items-center min-w-[250px] bg-white rounded-lg shadow-md p-4 hover:scale-105 transition-transform duration-200"
+              className="bestseller-item flex flex-col items-center min-w-[250px] bg-white rounded-lg shadow-md p-4 hover:scale-105 transition-transform duration-300"
               style={{ scrollSnapAlign: "center" }}
             >
-              <img src={product.image} onClick={() => navigate("/product")} alt={product.name} className="w-32 h-32 object-cover rounded-full mb-4 items-center" />
+              <img
+                src={product.image}
+                onClick={() => navigate("/product")}
+                alt={product.name}
+                className="w-32 h-32 object-cover rounded-full mb-4 items-center cursor-pointer"
+              />
               <h4>{product.name}</h4>
               <p>{product.description}</p>
-               <div className='flex items-center justify-between w-40'>
+              <div className='flex items-center justify-between w-40'>
                 <FaStar className=''/>
                 <p>$300.00</p> 
-                </div>
-              <button onClick={() => AddtoCart(product)} className='add-to-cart bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition-colors duration-200'>Add to Cart</button>
+              </div>
+              <button 
+                onClick={() => AddtoCart(product)} 
+                className='add-to-cart bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition-colors duration-200'
+              >
+                Add to Cart
+              </button>
             </div>
           ))}
         </div>
-        
+
+        {/* Modal */}
         <ReactModal 
           isOpen={modalIsOpen}
           onRequestClose={() => setModalIsOpen(false)}
@@ -102,6 +95,8 @@ function BestSellers({openCartModal}) {
 }
 
 export default BestSellers
+
+
 //Tailwind Version
 
 // import React, { useState } from 'react'

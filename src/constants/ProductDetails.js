@@ -79,7 +79,7 @@ const productDetails = [
     price: 365.00,
     image: img4,
     rate:4
-  }
+  },
   // {
   //   id: 11,
   //   name: "Protective Styling Gel",
@@ -101,3 +101,32 @@ const productDetails = [
 ];
 
 export default productDetails;
+
+ // <div className="landing-container">
+    // <Navbar openCart={openCart}/>
+    // <Header />
+    // <ProductInfo />
+    // <BestSellers  openCart={openCart}/>
+    // <Reviews />
+    // <Footer />
+    // <CartModal
+    //   modalState={isCartOpen} 
+    //   onRequestClose={closeCart}
+    //   className="cart-modal"
+    //   overlayClassName="cart-modal-overlay"> 
+
+    //  <button className="close-modal" onClick={closeCart}>X</button>
+    // <h2>Cart Items</h2>
+    // <ul>
+    //   {cartItems && cartItems.length >= 1 ? (
+    //     cartItems.map(item => (
+    //       <li key={item.id}>
+    //         {item.name} - ${item.price} x {item.quantity}
+    //       </li>
+    //     ))
+    //   ) : (
+    //     <li>No items in the cart</li>
+    //   )}
+    // </ul>
+    // </CartModal>
+    // </div>

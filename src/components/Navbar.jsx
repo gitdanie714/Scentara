@@ -9,7 +9,23 @@ import productDetails from '../constants/ProductDetails'
 import { HiShoppingBag, HiOutlineUser } from "react-icons/hi"
 import { useNavigate } from 'react-router-dom'
 
-function Navbar() { 
+function Navbar(){
+    const [itemAdded, setItemAdded] = useState(false)
+
+    const itemQuantity = () => {
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || []
+    const itemSize = cartItems.array.length;
+    console.log(itemSize);
+  }
+
+//     setSelectedProduct(prev => {
+//       if (prev && prev.id === product.id && prev.quantity > 0) {
+//         return { ...prev, quantity: prev.quantity - 1 }
+//       }
+//       return { ...product, quantity: 1 }
+//     })
+//   }
+
    const navigate = useNavigate(); 
   return (
     <div className='navbar max-w-full object-cover flex justify-between p-4 bg-pink border-b-2 border-darkred shadow-md'>
@@ -27,7 +43,7 @@ function Navbar() {
         </ul>
     </div>
     <div className="flex items-center max-w-7xl mx-auto px-4">
-      <HiShoppingBag className='text-darkred text-2xl mx-3 hover:stroke-white-700' onClick={()=> navigate("/checkout")} />
+      <HiShoppingBag className='text-darkred text-2xl mx-3 hover:stroke-white-700' onClick={()=> navigate("/f")} />
       <HiOutlineUser className='text-darkred text-2xl mx-3 hover:stroke-white-700'   />
     </div>
 <div>
