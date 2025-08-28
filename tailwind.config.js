@@ -20,7 +20,7 @@ module.exports = {
         info: '#3498DB',
     },
       fontFamily: {
-        sans: ['Helvetica', 'Arial', 'sans-serif'],
+        sans: ['Montserrat', 'sans-serif'],
         serif: ['Georgia', 'serif'],
         mono: ['Courier New', 'monospace'],
       },

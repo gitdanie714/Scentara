@@ -3,13 +3,13 @@ import productimg from '../images/prada.jpeg'
 
 function ProductInfo() {
   return (
-    <div className="bg-white p-6 m-6 w-screen h-auto">
+    <div className="bg-white p-6 m-6 ">
       
       {/* Grid container */}
-      <div className="grid grid-cols-3 gap-6 bg-slate-100 p-6 rounded-lg">
+      <div className="grid grid-cols-3 gap-6 bg-pink p-6 rounded-lg">
 
         {/* Left main product image */}
-        <div className="bg-blue-200 bg-opacity-80 rounded-lg shadow-lg flex items-center justify-center">
+        <div className="bg-pink bg-opacity-80 rounded-lg shadow-lg flex items-center justify-center">
           <img 
             src={productimg} 
             alt="Main Product" 
@@ -21,7 +21,7 @@ function ProductInfo() {
         <div className="col-span-2 grid grid-rows-2 gap-6">
 
           {/* Category card */}
-          <div className="relative group bg-darkred bg-opacity-80 p-4 rounded-lg shadow-lg flex flex-col items-center cursor-pointer">
+          <div className=" bg-opacity-80 p-4 rounded-lg shadow-lg flex flex-col items-center cursor-pointer">
             <img 
               src={productimg} 
               alt="Floral Scents" 
@@ -38,7 +38,7 @@ function ProductInfo() {
           </div>
 
           {/* Second category card */}
-          <div className="relative group bg-darkred bg-opacity-80 p-4 rounded-lg shadow-lg flex flex-col items-center cursor-pointer">
+          <div className=" bg-opacity-80 p-4 rounded-lg shadow-lg flex flex-col items-center cursor-pointer">
             <img 
               src={productimg} 
               alt="Wood Fragrance" 

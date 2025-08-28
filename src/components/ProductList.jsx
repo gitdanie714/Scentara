@@ -42,7 +42,7 @@ function ProductDisplay() {
         Your Popular Perfume Brands at Affordable Prices
       </h1>
 
-     <div className="bg-pink-100 p-8 rounded-xl shadow-lg w-full max-w-7xl">
+     <div className="bg-pink-100 p-8 rounded-xl  w-full max-w-7xl">
 
   {/* Pagination at top */}
   <div className="flex justify-end mb-8 gap-4">

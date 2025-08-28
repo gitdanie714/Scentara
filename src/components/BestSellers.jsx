@@ -4,7 +4,9 @@ import ReactModal from 'react-modal'
 import '../styles/modal.css' 
 import { useNavigate } from 'react-router-dom'
 import productDetails from '../constants/ProductDetails'
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+
+
 
 function BestSellers({ openCartModal }) {
   const navigate = useNavigate();
@@ -57,12 +59,16 @@ function BestSellers({ openCartModal }) {
                 alt={product.name}
                 className="w-32 h-32 object-cover rounded-full mb-4 items-center cursor-pointer"
               />
-              <h4>{product.name}</h4>
-              <p>{product.description}</p>
-              <div className='flex items-center justify-between w-40'>
-                <FaStar className=''/>
-                <p>$300.00</p> 
+              <h4 className='font-sans font-semibold'>{product.name}</h4>
+              <p className='text-slate-400'>{product.description}</p>
+              <div className='flex justify-between items-baseline w-40'>
+                <div className="flex text-yellow-500 mb-3">
+                            {[...Array(4)].map((_, i) => (<FaStar key={i} />))}
+                            <FaStarHalfAlt />
+                          </div>
+                          <span className="font-bold mb-2">${product.price}</span>
               </div>
+              
               <button 
                 onClick={() => AddtoCart(product)} 
                 className='add-to-cart bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition-colors duration-200'
