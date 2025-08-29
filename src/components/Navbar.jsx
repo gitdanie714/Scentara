@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "../styles/componentstyle.css"
 import { useState } from 'react'
 import { GiFlowers } from "react-icons/gi"
@@ -8,23 +8,13 @@ import CartModal from './CartModal'
 import productDetails from '../constants/ProductDetails'
 import { HiShoppingBag, HiOutlineUser } from "react-icons/hi"
 import { useNavigate } from 'react-router-dom'
+import { FaShoppingCart } from 'react-icons/fa'
+import { CartContext } from '../constants/CartContext'
+import { useContext } from 'react'
 
 function Navbar(){
-    const [itemAdded, setItemAdded] = useState(false)
-
-    const itemQuantity = () => {
-      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || []
-    const itemSize = cartItems.array.length;
-    console.log(itemSize);
-  }
-
-//     setSelectedProduct(prev => {
-//       if (prev && prev.id === product.id && prev.quantity > 0) {
-//         return { ...prev, quantity: prev.quantity - 1 }
-//       }
-//       return { ...product, quantity: 1 }
-//     })
-//   }
+  const { cart } = useContext(CartContext);
+  
 
    const navigate = useNavigate(); 
   return (
@@ -43,8 +33,15 @@ function Navbar(){
         </ul>
     </div>
     <div className="flex items-center max-w-7xl mx-auto px-4">
-      <HiShoppingBag className='text-darkred text-2xl mx-3 hover:stroke-white-700' onClick={()=> navigate("/f")} />
       <HiOutlineUser className='text-darkred text-2xl mx-3 hover:stroke-white-700'   />
+      <FaShoppingCart className='text-darkred text-2xl mx-3 hover:stroke-white-700' onClick={()=> navigate("/checkout")} />
+        {cart.length > 0 && (
+          <span className="absolute top-2 right-3 bg-darkred text-white text
+            -xs font-mono px-2 rounded-full">
+            {cart.length}
+          </span>
+        )}
+      
     </div>
 <div>
  

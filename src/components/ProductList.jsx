@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import productDetails from '../constants/ProductDetails';
 import ReactModal from 'react-modal';
 import { FaCartPlus } from 'react-icons/fa';
+import { CartContext } from '../constants/CartContext';
+import { useContext } from 'react';
 
 function ProductDisplay() {
   ReactModal.setAppElement('#root');
@@ -14,26 +16,32 @@ function ProductDisplay() {
   const indexOfLast = currentPage * productsPerPage;
   const indexOfFirst = indexOfLast - productsPerPage;
   const currentProducts = productDetails.slice(indexOfFirst, indexOfLast);
-
+  const { cart, setCart } = useContext(CartContext);
   // Auto-close modal
   setTimeout(() => {
     if (modalIsOpen) setModalIsOpen(false);
   }, 5000);
 
-  const AddtoCart = (product) => {
+  const addToCart =(product) =>{
     setSelectedProduct({ ...product, quantity: 1 });
+    setCart([...cart, selectedProduct]);
     setModalIsOpen(true);
+  }
 
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    const existingProduct = cartItems.find(item => item.id === product.id);
+  // const AddtoCart = (product) => {
+  //   setSelectedProduct({ ...product, quantity: 1 });
+  //   setModalIsOpen(true);
 
-    if (existingProduct) {
-      existingProduct.quantity += 1;
-    } else {
-      cartItems.push({ ...product, quantity: 1 });
-    }
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  };
+  //   const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  //   const existingProduct = cartItems.find(item => item.id === product.id);
+
+  //   if (existingProduct) {
+  //     existingProduct.quantity += 1;
+  //   } else {
+  //     cartItems.push({ ...product, quantity: 1 });
+  //   }
+  //   localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  // };
 
   return (
     <div className="flex flex-col items-center px-6 py-10 bg-gray-50">
@@ -76,7 +84,7 @@ function ProductDisplay() {
         <h4 className="text-lg font-semibold mb-1">{product.name}</h4>
         <span className="text-pink-600 font-bold mb-3">${product.price}</span>
         <button
-          onClick={() => AddtoCart(product)}
+          onClick={() => addToCart(product)}
           className="flex items-center gap-2 px-4 py-2 bg-darkred text-white rounded-lg hover:bg-opacitydarkred transition"
         >
           <FaCartPlus /> Add to Cart
