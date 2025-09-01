@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import "../styles/componentstyle.css"
 import ReactModal from 'react-modal'
 import '../styles/modal.css' 
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import productDetails from '../constants/ProductDetails'
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
@@ -53,9 +54,11 @@ function BestSellers({ openCartModal }) {
               className="bestseller-item flex flex-col items-center min-w-[250px] bg-white rounded-lg shadow-md p-4 hover:scale-105 transition-transform duration-300"
               style={{ scrollSnapAlign: "center" }}
             >
+              <Link
+            to={`/product/${product.id}`}
+          >
               <img
                 src={product.image}
-                onClick={() => navigate("/product")}
                 alt={product.name}
                 className="w-32 h-32 object-cover rounded-full mb-4 items-center cursor-pointer"
               />
@@ -68,7 +71,7 @@ function BestSellers({ openCartModal }) {
                           </div>
                           <span className="font-bold mb-2">${product.price}</span>
               </div>
-              
+              </Link>
               <button 
                 onClick={() => AddtoCart(product)} 
                 className='add-to-cart bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition-colors duration-200'

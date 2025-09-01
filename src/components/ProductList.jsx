@@ -25,6 +25,8 @@ function ProductDisplay() {
   const addToCart =(product) =>{
     setSelectedProduct({ ...product, quantity: 1 });
     setCart([...cart, selectedProduct]);
+    localStorage.setItem('cartItems', JSON.stringify([...cart, selectedProduct]));
+    console.log("Cart after adding:", [...cart, selectedProduct]);
     setModalIsOpen(true);
   }
 

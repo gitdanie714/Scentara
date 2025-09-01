@@ -6,20 +6,21 @@ import ReactModal from 'react-modal'
 import '../styles/modal.css'
 import CartModal from './CartModal'
 import productDetails from '../constants/ProductDetails'
-import { HiShoppingBag, HiOutlineUser } from "react-icons/hi"
-import { useNavigate } from 'react-router-dom'
+import { HiOutlineUser } from "react-icons/hi"
+import { Link, useNavigate } from 'react-router-dom'
 import { FaShoppingCart } from 'react-icons/fa'
 import { CartContext } from '../constants/CartContext'
 import { useContext } from 'react'
 
 function Navbar(){
-  const { cart } = useContext(CartContext);
-  
-
    const navigate = useNavigate(); 
+   ReactModal.setAppElement('#root') 
+  const { cart } = useContext(CartContext);
+ 
+
   return (
-    <div className='navbar max-w-full object-cover flex justify-between p-4 bg-pink border-b-2 border-darkred shadow-md'>
-      <div className='navbar-logo flex text-darkred font-bold text-2xl cursor-pointer gap-2' onClick={() => navigate("/")}>
+    <div className='navbar max-w-full object-cover flex justify-between p-4 bg-pink border-b-2 border-daronClick={() => navigate("/")kred shadow-md'>
+      <div className='navbar-logo flex text-darkred font-bold text-2xl cursor-pointer gap-2'>
         <span>Scentara</span> 
         <GiFlowers className='flex items-center' />
         </div>
@@ -34,7 +35,11 @@ function Navbar(){
     </div>
     <div className="flex items-center max-w-7xl mx-auto px-4">
       <HiOutlineUser className='text-darkred text-2xl mx-3 hover:stroke-white-700'   />
-      <FaShoppingCart className='text-darkred text-2xl mx-3 hover:stroke-white-700' onClick={()=> navigate("/checkout")} />
+      <Link to="/checkout">
+<FaShoppingCart
+  className="text-darkred text-2xl mx-3 hover:stroke-white-700 cursor-pointer"
+/>
+</Link>
         {cart.length > 0 && (
           <span className="absolute top-2 right-3 bg-darkred text-white text
             -xs font-mono px-2 rounded-full">

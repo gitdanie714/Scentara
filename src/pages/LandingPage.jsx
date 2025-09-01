@@ -65,14 +65,14 @@ const cartItems = JSON.parse(localStorage.getItem('cartItems'));
 
     //Tailwind version
     <div className="grid grid-rows-[auto auto auto auto auto auto auto] w-full max-w-screen overflow-x-auto">
-    <Navbar className="row-[1]" openCart={openCart}/>
     <Header className="row-[2]"/>
     <ProductInfo className="row-[4]" openCart={openCart}/>
     <BestSellers className="row-[3]"/>
     <ProductDisplay className="row-[5]"/>
     <Reviews className="row-[6]"/>
     <Footer className="row-[7]"/>
-    <CartModal
+    
+    {/* <CartModal
       modalState={isCartOpen} 
       onRequestClose={closeCart}
       className="cart-modal"
@@ -91,7 +91,7 @@ const cartItems = JSON.parse(localStorage.getItem('cartItems'));
         <li>No items in the cart</li>
       )}
     </ul>
-    </CartModal>
+    </CartModal> */}
     </div>
   )
 }
