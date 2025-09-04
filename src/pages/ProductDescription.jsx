@@ -1,54 +1,49 @@
 import React from 'react'
-import { useNavigate, useParams, useState } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import productDetails from '../constants/ProductDetails';
-import CartModal from '../components/CartModal';
+import { CartContext } from '../constants/CartContext';
 
 function ProductDescription() {
+  const { addToCart } = React.useContext(CartContext);
   const navigate = useNavigate();
   const { id } = useParams();
   const product = productDetails.find(p => p.id === parseInt(id));
-  const [selectedProduct, setSelectedProduct] = React.useState(null);
+  
+  // Initialize selectedProduct with product and quantity of 1
+  const [selectedProduct, setSelectedProduct] = React.useState(
+    product ? { ...product, quantity: 1 } : null
+  );
 
+  // Handle loading and error states
   if (!product) {
     return <h2 className="text-center text-red-500 mt-10 text-xl">Product not found</h2>;
   }
 
- const addtoCart = (product) => {
-  CartModal.modalState = true; // Open the cart modal
-  console.log(CartModal.modalState);
-  // Save cart items to localStorage or context
-  const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-  const existingItemIndex = cartItems.findIndex(item => item.id === product.id);
-  
-  if (existingItemIndex >= 0) {
-    cartItems[existingItemIndex].quantity += 1;
-  }
-  else {
-    cartItems.push({ ...product, quantity: 1 });
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }
-    // Logic to add product to cart
-    console.log(`${product.name} added to cart`);
-  }
-
-    const addQuantity = (product) => {
+  // Handle quantity increment
+  const addQuantity = (product) => {
     setSelectedProduct(prev => {
-      if (prev && prev.id === product.id) {
-        return { ...prev, quantity: prev.quantity + 1 }
-      }
-      return { ...product, quantity: 1 }
-    })
-  }
+      if (!prev) return { ...product, quantity: 1 };
+      return { ...prev, quantity: prev.quantity + 1 };
+    });
+  };
 
+  // Handle quantity decrement with minimum quantity validation
   const removeQuantity = (product) => {
     setSelectedProduct(prev => {
-      if (prev && prev.id === product.id && prev.quantity > 0) {
-        return { ...prev, quantity: prev.quantity - 1 }
-      }
-      return { ...product, quantity: 1 }
-    })
-  }
+      if (!prev) return { ...product, quantity: 1 };
+      const newQuantity = Math.max(1, prev.quantity - 1); // Ensure quantity doesn't go below 1
+      return { ...prev, quantity: newQuantity };
+    });
+  };
+
+  // Handle adding product to cart with validation
+  const handleAddToCart = () => {
+    if (!selectedProduct || selectedProduct.quantity < 1) {
+      return;
+    }
+    addToCart(selectedProduct);
+  };
 
   return (
     <div className="max-w-6xl mx-left p-6  bg-gray-50 w-full min-h-screen ">
@@ -85,11 +80,11 @@ function ProductDescription() {
              <div className="flex items-center mb-6 space-x-4 border-2 border-darkred w-1/3 justify-center rounded-full p-1">
               <button
                 onClick={() => removeQuantity(product)}
-                className="px-3 py-1 hover:bg-rose-300 rounded text-lg"
+                className="px-3 py-1 hover:bg-rose-300 rounded text-lg "
               >
                 -
               </button>
-              <span className="text-lg">{selectedProduct?.quantity || 0}</span>
+              <span className="text-lg">{selectedProduct?.quantity || 1}</span>
               <button
                 onClick={() => addQuantity(product)}
                 className="px-3 py-1 hover:bg-rose-300 rounded text-lg"
@@ -98,7 +93,7 @@ function ProductDescription() {
               </button>
             </div> 
 
-          <button className="px-6 py-3 bg-darkred text-white font-semibold rounded-lg shadow hover:bg-opacitydarkred transition" onClick={() => addtoCart(product)}
+          <button className="px-6 py-3 bg-darkred text-white font-semibold rounded-lg shadow hover:bg-opacitydarkred transition" onClick={handleAddToCart}
 >
             Add to Cart
           </button>
