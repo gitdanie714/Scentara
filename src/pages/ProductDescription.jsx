@@ -98,7 +98,7 @@ function ProductDescription() {
               </button>
             </div> 
 
-          <button className="px-6 py-3 bg-darkred text-white font-semibold rounded-lg shadow hover:bg-pink-600 transition" onClick={() => addtoCart(product)}
+          <button className="px-6 py-3 bg-darkred text-white font-semibold rounded-lg shadow hover:bg-opacitydarkred transition" onClick={() => addtoCart(product)}
 >
             Add to Cart
           </button>

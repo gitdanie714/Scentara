@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import productDetails from '../constants/ProductDetails';
 import ReactModal from 'react-modal';
 import { FaCartPlus } from 'react-icons/fa';
@@ -17,10 +17,18 @@ function ProductDisplay() {
   const indexOfFirst = indexOfLast - productsPerPage;
   const currentProducts = productDetails.slice(indexOfFirst, indexOfLast);
   const { cart, setCart } = useContext(CartContext);
+  
   // Auto-close modal
-  setTimeout(() => {
-    if (modalIsOpen) setModalIsOpen(false);
-  }, 5000);
+  useEffect(() => {
+  if (modalIsOpen) {
+    const timer = setTimeout(() => {
+      setModalIsOpen(false);
+    }, 2000); // Auto-close after 2 seconds
+
+    return () => clearTimeout(timer);
+  }
+}, [modalIsOpen]);
+
 
   const addToCart =(product) =>{
     setSelectedProduct({ ...product, quantity: 1 });
