@@ -1,22 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , useParams } from 'react';
 import productDetails from '../constants/ProductDetails';
 import ReactModal from 'react-modal';
 import { FaCartPlus } from 'react-icons/fa';
 import { CartContext } from '../constants/CartContext';
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 function ProductDisplay() {
   ReactModal.setAppElement('#root');
-
+  
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct,setSelectedProduct] = useState(null)
   const [currentPage, setCurrentPage] = useState(1);
-
   const productsPerPage = 8; // adjust for how many you want visible per page
   const indexOfLast = currentPage * productsPerPage;
   const indexOfFirst = indexOfLast - productsPerPage;
   const currentProducts = productDetails.slice(indexOfFirst, indexOfLast);
-  const { cart, setCart } = useContext(CartContext);
+  const context = useContext(CartContext);
+  
+  if (!context) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+  
+  const { addToCart } = context;
   
   // Auto-close modal
   useEffect(() => {
@@ -30,13 +36,19 @@ function ProductDisplay() {
 }, [modalIsOpen]);
 
 
-  const addToCart =(product) =>{
+const handleAddToCart = (product) => {
     setSelectedProduct({ ...product, quantity: 1 });
-    setCart([...cart, selectedProduct]);
-    localStorage.setItem('cartItems', JSON.stringify([...cart, selectedProduct]));
-    console.log("Cart after adding:", [...cart, selectedProduct]);
+    addToCart({ ...product, quantity: 1 });
     setModalIsOpen(true);
-  }
+  };
+
+  // const addToCart =(product) =>{
+  //   setSelectedProduct({ ...product, quantity: 1 });
+  //   setCart([...cart, selectedProduct]);
+  //   localStorage.setItem('cartItems', JSON.stringify([...cart, selectedProduct]));
+  //   console.log("Cart after adding:", [...cart, selectedProduct]);
+  //   setModalIsOpen(true);
+  // }
 
   // const AddtoCart = (product) => {
   //   setSelectedProduct({ ...product, quantity: 1 });
@@ -79,32 +91,34 @@ function ProductDisplay() {
     ))}
   </div>
 
-  {/* Product Grid */}
-  <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
-    {currentProducts.map((product) => (
-      <div
-        key={product.id}
-        className="flex flex-col items-center bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:scale-105 transition-transform duration-200"
-      >
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-32 h-32 object-cover rounded-full mb-4 border border-pink-200"
-        />
-        <h4 className="text-lg font-semibold mb-1">{product.name}</h4>
-        <span className="text-pink-600 font-bold mb-3">${product.price}</span>
-        <button
-          onClick={() => addToCart(product)}
-          className="flex items-center gap-2 px-4 py-2 bg-darkred text-white rounded-lg hover:bg-opacitydarkred transition"
+{/* Product Grid  */}
+    <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
+      {currentProducts.map((product) => (
+        <div
+          key={product.id}
+          className="flex flex-col items-center bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:scale-105 transition-transform duration-200"
         >
-          <FaCartPlus /> Add to Cart
-        </button>
-      </div>
-    ))}
+          <Link to={`/product/${product.id}`}>
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-32 h-32 object-cover rounded-full mb-4 border border-pink-200"
+            />
+            <h4 className="text-lg font-semibold mb-1 text-center w-full">{product.name}</h4>
+            <span className="text-pink-600 text-center font-bold mb-3 w-full block">${product.price}</span>
+          </Link>
+          <button
+            onClick={() => handleAddToCart(product)}
+            className="flex items-center gap-2 px-4 py-2 bg-darkred text-white rounded-lg hover:bg-opacitydarkred transition"
+          >
+            <FaCartPlus /> Add to Cart
+          </button>
+        </div>
+      ))}
+    </div>
   </div>
-</div>
 
-      {/* Modal */}
+        {/* Modal */}
       <ReactModal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}

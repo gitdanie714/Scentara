@@ -34,35 +34,6 @@ const cartItems = JSON.parse(localStorage.getItem('cartItems'));
   }
 
   return (
-    // <div className="landing-container">
-    // <Navbar openCart={openCart}/>
-    // <Header />
-    // <ProductInfo />
-    // <BestSellers  openCart={openCart}/>
-    // <Reviews />
-    // <Footer />
-    // <CartModal
-    //   modalState={isCartOpen} 
-    //   onRequestClose={closeCart}
-    //   className="cart-modal"
-    //   overlayClassName="cart-modal-overlay"> 
-
-    //  <button className="close-modal" onClick={closeCart}>X</button>
-    // <h2>Cart Items</h2>
-    // <ul>
-    //   {cartItems && cartItems.length >= 1 ? (
-    //     cartItems.map(item => (
-    //       <li key={item.id}>
-    //         {item.name} - ${item.price} x {item.quantity}
-    //       </li>
-    //     ))
-    //   ) : (
-    //     <li>No items in the cart</li>
-    //   )}
-    // </ul>
-    // </CartModal>
-    // </div>
-
     //Tailwind version
     <div className="grid grid-rows-[auto auto auto auto auto auto auto] w-full max-w-screen overflow-x-auto">
     <Header className="row-[2]"/>
@@ -71,27 +42,6 @@ const cartItems = JSON.parse(localStorage.getItem('cartItems'));
     <ProductDisplay className="row-[5]"/>
     <Reviews className="row-[6]"/>
     <Footer className="row-[7]"/>
-    
-    {/* <CartModal
-      modalState={isCartOpen} 
-      onRequestClose={closeCart}
-      className="cart-modal"
-      overlayClassName="cart-modal-overlay"> 
-
-     <button className="close-modal" onClick={closeCart}>X</button>
-    <h2>Cart Items</h2>
-    <ul>
-      {cartItems && cartItems.length >= 1 ? (
-        cartItems.map(item => (
-          <li key={item.id}>
-            {item.name} - ${item.price} x {item.quantity}
-          </li>
-        ))
-      ) : (
-        <li>No items in the cart</li>
-      )}
-    </ul>
-    </CartModal> */}
     </div>
   )
 }

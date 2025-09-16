@@ -93,7 +93,8 @@ function ProductDescription() {
               </button>
             </div> 
 
-          <button className="px-6 py-3 bg-darkred text-white font-semibold rounded-lg shadow hover:bg-opacitydarkred transition" onClick={handleAddToCart}
+          <button className="px-6 py-3 bg-darkred text-white font-semibold rounded-lg shadow hover:bg-opacitydarkred transition" 
+          onClick={handleAddToCart}
 >
             Add to Cart
           </button>
