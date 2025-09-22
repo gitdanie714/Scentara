@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../components/Header'
-import ProductInfo from '../components/BestSellers'
+import ProductInfo from '../components/ProductInfo'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Reviews from '../components/Reviews'
@@ -10,8 +10,8 @@ import '../styles/componentstyle.css'
 import '../styles/LandingPage.css'
 import CartModal from '../components/CartModal'
 import '../styles/modal.css'
-import BestSellers from '../components/ProductInfo'
-import ProductDisplay from '../components/ProductList'
+import BestSellers from '../components/BestSellers'
+import ProductList from '../components/ProductList'
 
 function LandingPage() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -34,14 +34,30 @@ const cartItems = JSON.parse(localStorage.getItem('cartItems'));
   }
 
   return (
-    //Tailwind version
-    <div className="grid grid-rows-[auto auto auto auto auto auto auto] w-full max-w-screen overflow-x-auto">
-    <Header className="row-[2]"/>
-    <ProductInfo className="row-[4]" openCart={openCart}/>
-    <BestSellers className="row-[3]"/>
-    <ProductDisplay className="row-[5]"/>
-    <Reviews className="row-[6]"/>
-    <Footer className="row-[7]"/>
+    <div className="flex flex-col min-h-screen w-full">
+      <main className="flex-1 w-full">
+        <div className="w-full">
+          <Header />
+        </div>
+        <div className="w-full bg-pink-50">
+          <BestSellers />
+        </div>
+        <div className="w-full">
+          <ProductInfo openCart={openCart} />
+        </div>
+        <div className="w-full bg-pink-50">
+          <ProductList />
+        </div>
+        <div className="w-full">
+          <Reviews />
+        </div>
+      </main>
+      <Footer />
+      <CartModal
+        isOpen={isCartOpen}
+        onRequestClose={closeCart}
+        items={cartItems}
+      />
     </div>
   )
 }

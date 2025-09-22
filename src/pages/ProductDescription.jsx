@@ -1,20 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaPlus, FaMinus } from 'react-icons/fa';
+import { IoWaterOutline, IoInformationCircleOutline, IoLeafOutline } from 'react-icons/io5';
 import productDetails from '../constants/ProductDetails';
 import { CartContext } from '../constants/CartContext';
+import CartModal from '../components/CartModal';
 
 function ProductDescription() {
   const { addToCart } = React.useContext(CartContext);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
   const product = productDetails.find(p => p.id === parseInt(id));
   
   // Initialize selectedProduct with product and quantity of 1
   const [selectedProduct, setSelectedProduct] = React.useState(
-    product ? { ...product, quantity: 1 } : null
+    product ? { ...product, quantity: 1, selectedSize: product.sizes ? product.sizes[0] : null } : null
   );
 
+  // State for managing the currently displayed main image
+  const [mainImage, setMainImage] = React.useState(product?.image);
+  
+  // Array of additional product images (you can replace these with actual additional images)
+  const productImages = [
+    product?.image,
+    '/images/perfimg.webp',
+    '/images/prada.jpeg',
+  ];
+
+  // Function to handle thumbnail click
+  const handleThumbnailClick = (imageSrc) => {
+    setMainImage(imageSrc);
+  };
   // Handle loading and error states
   if (!product) {
     return <h2 className="text-center text-red-500 mt-10 text-xl">Product not found</h2>;
@@ -43,63 +60,123 @@ function ProductDescription() {
       return;
     }
     addToCart(selectedProduct);
+    setModalIsOpen(true);
+
   };
 
   return (
-    <div className="max-w-6xl mx-left p-6  bg-gray-50 w-full min-h-screen ">
+    <div className="min-h-screen w-full bg-gray-50">
       {/* Back Button */}
-      <button
-        onClick={() => navigate('/')}
-        className="flex items-center gap-2 text-gray-700 hover:text-pink-600 mb-6"
-      >
-        <FaArrowLeft /> <span>Back to Products</span>
-      </button>
+      {/* ... */}
 
       {/* Product Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10  bg-pink shadow-lg rounded-xl p-6">
+      <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 gap-0">
         {/* Image Section */}
-        <div className="flex justify-center items-center">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="h-full object-cover rounded-lg"
-          />
+        <div className="flex flex-col space-y-0">
+          {/* Main Image */}
+          <div className="flex justify-center items-center bg-white rounded-none">
+            <img
+              src={mainImage}
+              alt={product.name}
+              className="w-full max-w-lg h-[350px] object-contain transition-all duration-300 ease-in-out"
+            />
+          </div>
+          
+          {/* Additional Images Gallery */}
+          <div className="grid grid-cols-3 gap-0 bg-white">
+            {productImages.map((img, index) => (
+              <div 
+                key={index}
+                className={`aspect-square overflow-hidden hover:opacity-80 transition-all duration-300 cursor-pointer ${mainImage === img ? 'ring-1 ring-darkred' : ''}`}
+                onClick={() => handleThumbnailClick(img)}
+              >
+                <img
+                  src={img}
+                  alt={`${product.name}`}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Details Section */}
-        <div className="flex flex-col justify-center bg-pink p-6 rounded-lg">
+        <div className="flex flex-col justify-center bg-pink p-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">{product.name}</h1>
-          <div className='flex items-center  mb-2 bg-pink border-2 border-darkred w-auto justify-center rounded-full p-1'>
-          <p className="text-sm font-semibold text-darkred m-2">{product.category}</p>
+          <div className="flex items-center mb-2 bg-opacitydarkred border-2 border-darkred justify-center rounded-full px-2 py-0.5 w-fit text-xs">
+            <p className="font-semibold text-darkred m-1">{product.category}</p>
           </div>
-          <p className="text-gray-600 mb-6">{product.description}</p>
+          {/* Review Stars beside category */}
+          <div className="flex items-center mb-2 ml-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <svg
+                key={i}
+                className={`w-4 h-4 ${i < Math.round(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}
+                fill="gold"
+                viewBox="0 0 20 20"
+              >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.921-.755 1.688-1.54 1.118l-3.38-2.455a1 1 0 00-1.176 0l-3.38 2.455c-.784.57-1.838-.197-1.539-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.049 9.393c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.966z" />
+              </svg>
+            ))}
+          </div>
+          <p className="text-gray-600 mb-6">{product.scentDescription}</p>
           <span className="text-2xl font-semibold text-pink-600 mb-6">
             ${product.price}
           </span>
-            {/* Quantity Selector - Uncomment if needed */}
-             <div className="flex items-center mb-6 space-x-4 border-2 border-darkred w-1/3 justify-center rounded-full p-1">
+          {/* Quantity Selector and Add to Cart Container */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+            {/* Fixed-width Quantity Selector */}
+            <div className="flex items-center border border-darkred w-[150px] justify-between rounded-full p-1">
               <button
                 onClick={() => removeQuantity(product)}
-                className="px-3 py-1 hover:bg-rose-300 rounded text-lg "
+                className="w-10 h-10 flex items-center justify-center hover:bg-rose-300 rounded-full text-lg"
               >
                 -
               </button>
-              <span className="text-lg">{selectedProduct?.quantity || 1}</span>
+              <span className="text-lg font-medium w-10 text-center">{selectedProduct?.quantity || 1}</span>
               <button
                 onClick={() => addQuantity(product)}
-                className="px-3 py-1 hover:bg-rose-300 rounded text-lg"
+                className="w-10 h-10 flex items-center justify-center hover:bg-rose-300 rounded-full text-lg"
               >
                 +
               </button>
-            </div> 
+            </div>
 
-          <button className="px-6 py-3 bg-darkred text-white font-semibold rounded-lg shadow hover:bg-opacitydarkred transition" 
-          onClick={handleAddToCart}
->
-            Add to Cart
-          </button>
+            {/* Fixed-width Add to Cart Button */}
+            <button 
+              className="w-[200px] h-[50px] bg-darkred text-white font-semibold rounded-full shadow hover:bg-hoverdarkred transition flex items-center justify-center" 
+              onClick={handleAddToCart}
+            >
+              Add to Cart
+            </button>
+          </div>
         </div>
       </div>
+      <CartModal 
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        modalstyle={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            direction: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+          },
+          content: {
+            position: 'relative',
+            inset: 'auto',
+            padding: '0',
+            border: 'none',
+            borderRadius: '8px',
+            maxWidth: '400px',
+            width: '50%',
+            maxHeight: '300px',
+            overflow: 'auto',
+          },
+        }}
+        productName = {selectedProduct ? selectedProduct.name : ''}
+      />
     </div>
   );
 }

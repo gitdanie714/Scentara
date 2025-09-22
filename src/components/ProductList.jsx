@@ -3,10 +3,12 @@ import productDetails from '../constants/ProductDetails';
 import ReactModal from 'react-modal';
 import { FaCartPlus } from 'react-icons/fa';
 import { CartContext } from '../constants/CartContext';
+import CartModal from './CartModal';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-function ProductDisplay() {
+
+function ProductList() {
   ReactModal.setAppElement('#root');
   
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -21,7 +23,6 @@ function ProductDisplay() {
   if (!context) {
     throw new Error('useCart must be used within a CartProvider');
   }
-  
   const { addToCart } = context;
   
   // Auto-close modal
@@ -42,29 +43,7 @@ const handleAddToCart = (product) => {
     setModalIsOpen(true);
   };
 
-  // const addToCart =(product) =>{
-  //   setSelectedProduct({ ...product, quantity: 1 });
-  //   setCart([...cart, selectedProduct]);
-  //   localStorage.setItem('cartItems', JSON.stringify([...cart, selectedProduct]));
-  //   console.log("Cart after adding:", [...cart, selectedProduct]);
-  //   setModalIsOpen(true);
-  // }
-
-  // const AddtoCart = (product) => {
-  //   setSelectedProduct({ ...product, quantity: 1 });
-  //   setModalIsOpen(true);
-
-  //   const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-  //   const existingProduct = cartItems.find(item => item.id === product.id);
-
-  //   if (existingProduct) {
-  //     existingProduct.quantity += 1;
-  //   } else {
-  //     cartItems.push({ ...product, quantity: 1 });
-  //   }
-  //   localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  // };
-
+ 
   return (
     <div className="flex flex-col items-center px-6 py-10 bg-gray-50">
       {/* Title */}
@@ -93,7 +72,7 @@ const handleAddToCart = (product) => {
 
 {/* Product Grid  */}
     <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
-      {currentProducts.map((product) => (
+      {currentProducts.map((product) =>  (
         <div
           key={product.id}
           className="flex flex-col items-center bg-white rounded-lg shadow-md p-6 hover:shadow-xl hover:scale-105 transition-transform duration-200"
@@ -109,7 +88,7 @@ const handleAddToCart = (product) => {
           </Link>
           <button
             onClick={() => handleAddToCart(product)}
-            className="flex items-center gap-2 px-4 py-2 bg-darkred text-white rounded-lg hover:bg-opacitydarkred transition"
+            className="flex items-center gap-2 px-4 py-2 bg-darkred text-white rounded-lg hover:bg-hoverdarkred transition"
           >
             <FaCartPlus /> Add to Cart
           </button>
@@ -117,30 +96,35 @@ const handleAddToCart = (product) => {
       ))}
     </div>
   </div>
-
-        {/* Modal */}
-      <ReactModal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        contentLabel="Product Details"
-        className="product-modal flex flex-col items-center justify-center bg-white rounded-lg shadow-lg p-6 relative max-w-sm"
-        overlayClassName="product-modal-overlay fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center"
-      >
-        {selectedProduct && (
-          <div className="text-center">
-            <button
-              onClick={() => setModalIsOpen(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-lg font-bold"
-            >
-              ×
-            </button>
-            <h2 className="text-2xl font-bold mb-2 text-pink-600">Added to Cart</h2>
-            <p className="text-gray-700">{selectedProduct.name} has been added to your cart.</p>
-          </div>
-        )}
-      </ReactModal>
+  <CartModal 
+          isOpen={modalIsOpen}
+          onRequestClose={() => setModalIsOpen(false)}
+          modalstyle={{
+            overlay: {
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              display: 'flex',
+              direction: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1000,
+            },
+            content: {
+              position: 'relative',
+              inset: 'auto',
+              padding: '0',
+              border: 'none',
+              borderRadius: '8px',
+              maxWidth: '400px',
+              width: '50%',
+              maxHeight: '300px',
+              overflow: 'auto',
+            },
+          }}
+          productName = {selectedProduct ? selectedProduct.name : ''}
+        />
+      
     </div>
   );
 }
 
-export default ProductDisplay;
+export default  ProductList;

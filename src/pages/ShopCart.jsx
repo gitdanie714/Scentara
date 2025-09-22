@@ -20,7 +20,7 @@ function ShopCart() {
         <div>
           <p className="text-gray-600 mb-4">Your cart is empty.</p>
           <button
-            className="bg-darkred text-white px-4 py-2 rounded-md hover:bg-red-700 shadow"
+            className="bg-darkred text-white px-4 py-2 rounded-md  hover:bg-opacitydarkred transition"
             onClick={() => navigate("/")}
           >
             Continue Shopping
@@ -103,7 +103,7 @@ function ShopCart() {
                 Clear Cart
               </button>
               <button
-                className="flex-1 bg-darkred text-white px-6 py-3 rounded-md hover:bg-opacitydarkred transition"
+                className="flex-1 bg-darkred text-white px-6 py-3 rounded-md hover:bg-hoverdarkred transition"
                 onClick={() => alert("Proceeding to payment...")}
               >
                 Proceed to Payment

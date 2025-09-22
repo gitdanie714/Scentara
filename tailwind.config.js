@@ -5,7 +5,8 @@ module.exports = {
     extend: {
       colors: {
         darkred: '#66021f',
-        opacitydarkred: '#4b0017',
+        opacitydarkred: '#ffcbd1',
+        hoverdarkred: '#4b0017',
         pink: '#FFF9FB',
         opacitypink: '#efe4e6',
         accent: '#F5A623',

@@ -4,6 +4,7 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
 const [cart, setCart] = useState([]);
+const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Load cart from localStorage when app starts
   useEffect(() => {
@@ -77,11 +78,16 @@ const [cart, setCart] = useState([]);
         setCart([]);
     };
 
+    
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+        <CartContext.Provider value={{ 
+            cart, 
+            addToCart, 
+            removeFromCart, 
+            clearCart
+        }}>
             {children}
         </CartContext.Provider>
-
     );
 
 }
