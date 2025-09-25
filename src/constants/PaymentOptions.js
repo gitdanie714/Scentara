@@ -17,12 +17,6 @@ const paymentOptions = [
       label: "PayPal",
       icon: <FaPaypal size={32} className="text-blue-600" />
     }
-    ,
-    {
-        id: "applepay",
-        label: "Apple Pay",
-        icon: <FaApplePay size={32} className="text-black" />
-    }   
   ];
 
 export default paymentOptions;
