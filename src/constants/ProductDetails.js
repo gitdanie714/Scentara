@@ -139,9 +139,9 @@ const productDetails = [
       base: ["Suede", "Musk"]
     },
     sizes: [
-      { size: "30ml", price: 89.99 },
-      { size: "50ml", price: 129.99 },
-      { size: "100ml", price: 189.99 },
+      { sizeOne: "30ml", price: 89.99 },
+      { sizeTwo: "50ml", price: 129.99 },
+      { sizeThree: "100ml", price: 189.99 },
     ]
   },
   {

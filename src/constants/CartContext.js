@@ -78,13 +78,27 @@ const [isCartOpen, setIsCartOpen] = useState(false);
         setCart([]);
     };
 
+    // Update quantity function
+    const updateQuantity = (productId, changeAmount) => {
+        setCart(prevCart => {
+            const updatedCart = prevCart.map(item => {
+                if (item.id === productId) {
+                    const newQuantity = Math.max(1, item.quantity + changeAmount);
+                    return { ...item, quantity: newQuantity };
+                }
+                return item;
+            });
+            return updatedCart;
+        });
+    };
     
     return (
         <CartContext.Provider value={{ 
             cart, 
             addToCart, 
             removeFromCart, 
-            clearCart
+            clearCart,
+            updateQuantity
         }}>
             {children}
         </CartContext.Provider>

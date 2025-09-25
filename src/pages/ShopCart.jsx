@@ -1,10 +1,28 @@
-import React, { useContext } from "react";
-import { CartContext } from "../constants/CartContext"; // adjust the path
+import React, { useContext, useState } from "react";
+import { FaCcVisa, FaCcMastercard, FaCcAmex, FaPaypal, FaApplePay } from "react-icons/fa";
+import { CartContext } from "../constants/CartContext";
 import { useNavigate } from "react-router-dom";
 
 function ShopCart() {
-  const { cart, removeFromCart, clearCart } = useContext(CartContext);
+  const { cart, removeFromCart, clearCart, updateQuantity } = useContext(CartContext);
   const navigate = useNavigate();
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const paymentOptions = [
+    {
+      id: "cards",
+      label: "Credit/Debit Cards",
+      icons: [
+        <FaCcVisa key="visa" size={32} className="text-blue-700" />,
+        <FaCcMastercard key="mastercard" size={32} className="text-red-500" />
+      ]
+    },
+    { 
+      id: "paypal", 
+      label: "PayPal",
+      icon: <FaPaypal size={32} className="text-blue-600" />
+    }
+  ];
 
   // calculate total
   const total = cart.reduce(
@@ -13,14 +31,12 @@ function ShopCart() {
   );
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-pink-50 via-red-50 to-yellow-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-darkred">Your Cart</h1>
-
+    <div className="max-w-7xl mx-auto p-4 md:p-6 bg-gradient-to-br from-pink-50 via-red-50 to-yellow-50 min-h-screen">
       {cart.length === 0 ? (
-        <div>
+        <div className="text-center py-12">
           <p className="text-gray-600 mb-4">Your cart is empty.</p>
           <button
-            className="bg-darkred text-white px-4 py-2 rounded-md  hover:bg-opacitydarkred transition"
+            className="bg-darkred text-white px-6 py-3 rounded-xl hover:bg-opacitydarkred transition-all duration-200"
             onClick={() => navigate("/")}
           >
             Continue Shopping
@@ -28,85 +44,113 @@ function ShopCart() {
         </div>
       ) : (
         <>
-          <div className="space-y-4">
-            {cart.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center justify-between pb-4  bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition"
-                style={{ borderLeft: "6px solid darkred"}}
-              >
-                <div className="flex-grow">
-                  <p className="font-semibold text-lg text-darkred">{item.name}</p>
-                  <p className="text-gray-600">${item.price} each</p>
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Cart Items with Total */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">
+              <div className="p-6 bg-gradient-to-r from-red-50 to-red-100">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-xl font-semibold text-darkred">Shopping Cart</h2>
+                  <div className="text-right">
+                    <p className="text-sm text-gray-600">Total Amount:</p>
+                    <p className="text-2xl font-bold text-darkred">${total.toFixed(2)}</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center bg-gray-100 rounded-lg px-2 py-1">
-                    <span className="text-gray-700 mr-2">Qty:</span>
-                    <div className="flex items-center space-x-3">
-                      <button className="text-darkred hover:text-red-700 font-bold px-2">
-                        -
-                      </button>
-                      <span className="text-lg font-semibold min-w-[20px] text-center">
-                        {item.quantity}
+              </div>
+              <div className="divide-y divide-gray-200">
+                {cart.map((item) => (
+                  <div key={item.id} className="p-4 flex items-center hover:bg-gray-50 transition-colors">
+                    <div className="flex gap-6 items-center flex-1">
+                      <img 
+                        src={item.image} 
+                        alt={item.name} 
+                        className="w-24 h-24 object-cover rounded-md"
+                      />
+                      <div>
+                        <h3 className="font-semibold text-darkred">{item.name}</h3>
+                        <p className="text-sm text-gray-500">${item.price} each</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-6">
+                      <div className="flex items-center bg-gray-100 rounded-lg px-3 py-1">
+                        <button 
+                          className="text-darkred hover:text-red-700 px-2"
+                          onClick={() => updateQuantity(item.id, -1)}
+                        >
+                          -
+                        </button>
+                        <span className="w-8 text-center font-medium">{item.quantity}</span>
+                        <button 
+                          className="text-darkred hover:text-red-700 px-2"
+                          onClick={() => updateQuantity(item.id, 1)}
+                        >
+                          +
+                        </button>
+                      </div>
+                      <span className="font-semibold text-gray-900 w-24 text-right">
+                        ${(item.price * item.quantity).toFixed(2)}
                       </span>
-                      <button className="text-darkred hover:text-red-700 font-bold px-2">
-                        +
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        className="text-red-500 hover:text-red-700 font-medium"
+                      >
+                        Remove
                       </button>
                     </div>
                   </div>
-                  <p className="font-semibold text-lg text-black">
-                    ${(item.price * item.quantity).toFixed(2)}
-                  </p>
+                ))}
+              </div>
+            </div>
+
+            {/* Payment Section */}
+            <div className="bg-white rounded-xl p-6 shadow-md border border-red-100">
+              <h2 className="text-xl font-semibold mb-4 text-darkred">Select Payment Method</h2>
+              <div className="space-y-3">
+                {paymentOptions.map((option) => (
                   <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-red-500 hover:text-red-700 font-semibold"
+                    key={option.id}
+                    onClick={() => setSelectedOption(option.id)}
+                    className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200
+                      ${selectedOption === option.id 
+                        ? "border-darkred bg-rose-50" 
+                        : "border-gray-200 hover:border-red-200 hover:bg-rose-50/50"}`}
                   >
-                    Remove
+                    <div className="flex items-center gap-2">
+                      {option.icons ? (
+                        <div className="flex items-center gap-1">
+                          {option.icons.map((icon, index) => (
+                            <span key={index}>{icon}</span>
+                          ))}
+                        </div>
+                      ) : (
+                        option.icon
+                      )}
+                    </div>
+                    <span className="font-medium text-gray-700">{option.label}</span>
                   </button>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          <div className="mt-8 bg-white rounded-lg p-6 shadow-lg border border-red-100">
-            <div className="flex justify-between items-center mb-4">
-              <p className="text-xl font-semibold text-darkred">
-                Subtotal:
-              </p>
-              <p className="text-xl text-darkred font-bold">
-                ${total.toFixed(2)}
-              </p>
-            </div>
-            
-            <div className="border-t border-gray-200 pt-4 mb-4">
-              <p className="text-lg font-semibold mb-3 text-darkred">Payment Method</p>
-              <div className="space-y-2">
-                <div className="flex items-center">
-                  <input type="radio" id="card" name="payment" className="mr-2 accent-darkred" defaultChecked />
-                  <label htmlFor="card" className="flex items-center gap-2">
-                    Credit/Debit Card
-                    <span className="text-gray-500 text-sm">(Visa, Mastercard, etc.)</span>
-                  </label>
+              {selectedOption && (
+                <div className="mt-6 text-sm text-gray-600">
+                  Selected payment method:{" "}
+                  <span className="font-semibold text-darkred capitalize">{selectedOption}</span>
                 </div>
-                <div className="flex items-center">
-                  <input type="radio" id="paypal" name="payment" className="mr-2 accent-yellow-600" />
-                  <label htmlFor="paypal">PayPal</label>
-                </div>
-              </div>
-            </div>
+              )}
 
-            <div className="flex justify-between gap-4">
-              <button
-                onClick={clearCart}
-                className="flex-1 bg-gray-200 px-4 py-3 rounded-md hover:bg-gray-300 font-semibold text-darkred border border-gray-300"
+              <button 
+                className="mt-6 w-full bg-darkred text-white py-4 rounded-xl hover:bg-opacitydarkred transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl"
+                onClick={() => {
+                  if (!selectedOption) {
+                    alert("Please select a payment method");
+                    return;
+                  }
+                  // Handle payment completion
+                  alert(`Processing payment with ${selectedOption}...`);
+                  clearCart(); // Clear the cart after successful payment
+                  navigate("/"); // Redirect to home page
+                }}
               >
-                Clear Cart
-              </button>
-              <button
-                className="flex-1 bg-darkred text-white px-6 py-3 rounded-md hover:bg-hoverdarkred transition"
-                onClick={() => alert("Proceeding to payment...")}
-              >
-                Proceed to Payment
+                Pay ${total.toFixed(2)}
               </button>
             </div>
           </div>

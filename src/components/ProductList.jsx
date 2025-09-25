@@ -1,7 +1,7 @@
 import React, { useEffect, useState , useParams } from 'react';
 import productDetails from '../constants/ProductDetails';
 import ReactModal from 'react-modal';
-import { FaCartPlus } from 'react-icons/fa';
+import { FaAngleLeft, FaAngleRight, FaCartPlus } from 'react-icons/fa';
 import { CartContext } from '../constants/CartContext';
 import CartModal from './CartModal';
 import { useContext } from 'react';
@@ -55,7 +55,7 @@ const handleAddToCart = (product) => {
 
   {/* Pagination at top */}
   <div className="flex justify-end mb-8 gap-4">
-    {[1, 2].map((page) => (
+    {[1 , 2].map((page) => (
       <button
         key={page}
         onClick={() => setCurrentPage(page)}
@@ -68,6 +68,19 @@ const handleAddToCart = (product) => {
         {page}
       </button>
     ))}
+    {/* {[<FaAngleLeft/>, <FaAngleRight/>].map((page) => (
+      <button
+        key={page}
+        onClick={() => setCurrentPage(page)}
+        className={`px-7 py-2 rounded-3xl font-semibold ${
+          currentPage === page
+            ? 'bg-darkred text-white'
+            : 'bg-white border-darkred border-2 text-darkred hover:bg-gray-100'
+        }`}
+      >
+        {page}
+      </button>
+    ))} */}
   </div>
 
 {/* Product Grid  */}

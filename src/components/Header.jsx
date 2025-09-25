@@ -4,7 +4,7 @@ import logo from "../images/img1.png"
 import { IoIosArrowRoundForward } from "react-icons/io"
 function Header() {
   return (
-    <div className='w-full bg-pink'>
+    <div className='w-full bg-white'>
       <div className='container mx-auto flex flex-col md:flex-row items-center justify-between min-h-[600px] px-4 md:px-8'>
         <div className='flex-1 flex flex-col justify-center items-start text-left md:pr-8'>
           <h1 className='text-darkred text-4xl md:text-5xl lg:text-7xl font-semibold mb-6 '>
