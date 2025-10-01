@@ -6,13 +6,15 @@ export const CartProvider = ({ children }) => {
 const [cart, setCart] = useState([]);
 const [isCartOpen, setIsCartOpen] = useState(false);
 
+// Study & Understand the Logic
+
   // Load cart from localStorage when app starts
   useEffect(() => {
     try {
       const storedCart = localStorage.getItem('cartItems');
       if (storedCart) {
         const parsedCart = JSON.parse(storedCart);
-        if (Array.isArray(parsedCart)) {
+        if (Array.isArray(parsedCart)) { // find out array if statement meaning
           setCart(parsedCart);
         }
       }
@@ -30,7 +32,7 @@ const [isCartOpen, setIsCartOpen] = useState(false);
         // Verify the save worked
         const saved = localStorage.getItem('cartItems');
         if (!saved) {
-          console.error('Failed to save cart to localStorage');
+          console.error('Failed to save cart to localStorage'); // change console error to error message
         }
       } else {
         localStorage.removeItem('cartItems');
@@ -48,7 +50,7 @@ const [isCartOpen, setIsCartOpen] = useState(false);
         }
         
         setCart(prevCart => {
-            const existingProduct = prevCart.find(item => item.id === product.id);
+            const existingProduct = prevCart.find(item => item.id === product.id); // Review code to understanding the logic
             const newCart = existingProduct
                 ? prevCart.map((item) =>
                     item.id === product.id
@@ -65,7 +67,7 @@ const [isCartOpen, setIsCartOpen] = useState(false);
             }
             
             return newCart;
-        });
+        }); // Review code for logic understanding
     };
 
     //Remove from cart function

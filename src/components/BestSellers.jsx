@@ -68,10 +68,12 @@ function BestSellers() {
               <h4 className='font-sans font-semibold'>{product.name}</h4>
               <p className='text-slate-400'>{product.description}</p>
               <div className='flex justify-between items-baseline w-40'>
+
                 <div className="flex text-yellow-500 mb-3">
                             {[...Array(4)].map((_, i) => (<FaStar key={i} />))}
                             <FaStarHalfAlt />
-                          </div>
+                          </div> 
+                          {/* Study the logic */}
                           <span className="font-bold mb-2">${product.price}</span>
               </div>
               </Link>
