@@ -34,7 +34,6 @@ function Navbar(){
           <div className='hidden md:flex items-center justify-center flex-1'>
             <div className='flex space-x-8'>
               <Link to="/" className='text-darkred hover:text-opacity-75 px-3 py-2 font-semibold'>Home</Link>
-              <Link to="/products" className='text-darkred hover:text-opacity-75 px-3 py-2 font-semibold'>Products</Link>
               <Link to="/about" className='text-darkred hover:text-opacity-75 px-3 py-2 font-semibold'>About Us</Link>
               <Link to="/contact" className='text-darkred hover:text-opacity-75 px-3 py-2 font-semibold'>Contact</Link>
               <Link to="/shop" className='text-darkred hover:text-opacity-75 px-3 py-2 font-semibold'>Shop</Link>
