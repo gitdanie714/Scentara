@@ -2,11 +2,13 @@ import React, { useContext, useState } from "react";
 import { CartContext } from "../constants/CartContext";
 import paymentOptions from "../constants/PaymentOptions";
 import { useNavigate } from "react-router-dom";
+import CheckoutModal from "../components/CheckOutModal";
 
 function ShopCart() {
   const { cart, removeFromCart, clearCart, updateQuantity } = useContext(CartContext);
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("");
+  const [isCheckoutModal, setCheckoutModal] = useState(false);
 
   
   // calculate total
@@ -83,63 +85,34 @@ function ShopCart() {
                     </div>
                   </div>
                 ))}
+
+              </div>
+              <div className="p-4 flex justify-between items-center bg-gray-50">
+                <button
+                  oonClick={() => navigate("/")}
+                  className="bg-red-100 text-red-700 px-4 py-2 rounded-lg hover:bg-red-200 transition-all duration-200"
+                >
+                  Continue Shopping
+                </button>
+                <button
+                  onClick={() => setCheckoutModal(true)}
+                  className="bg-darkred text-white px-6 py-3 rounded-xl hover:bg-opacitydarkred transition-all duration-200"
+                >
+                  CheckOut
+                </button>
               </div>
             </div>
-
-            {/* Payment Section */}
-            <div className="bg-white p-6 m-2 shadow-md border border-red-100">
-              <h2 className="text-xl font-semibold mb-4 text-darkred">Select Payment Method</h2>
-              <div className="space-y-3">
-                {paymentOptions.map((option) => (
-                  <button
-                    key={option.id}
-                    onClick={() => setSelectedOption(option.id)}
-                    className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200
-                      ${selectedOption === option.id 
-                        ? "border-darkred bg-rose-50" 
-                        : "border-gray-200 hover:border-red-200 hover:bg-rose-50/50"}`}
-                  >
-                    <div className="flex items-center gap-2">
-                      {option.icons ? (
-                        <div className="flex items-center gap-1">
-                          {option.icons.map((icon, index) => (
-                            <span key={index}>{icon}</span>
-                          ))}
-                        </div>
-                      ) : (
-                        option.icon
-                      )}
-                    </div>
-                    <span className="font-medium text-gray-700">{option.label}</span>
-                  </button>
-                ))}
-              </div>
-
-              {selectedOption && (
-                <div className="mt-6 text-sm text-gray-600">
-                  Selected payment method:{" "}
-                  <span className="font-semibold text-darkred capitalize">{selectedOption}</span>
-                </div>
-              )}
-
-              <button 
-                className="mt-6 w-full bg-darkred text-white py-4 rounded-xl hover:bg-hoverdarkred transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl"
-                onClick={() => {
-                  if (!selectedOption) {
-                    alert("Please select a payment method");
-                    return;
-                  }
-                  // Handle payment completion
-                  alert(`Processing payment with ${selectedOption}...`);
-                }}
-              >
-                Pay ${total.toFixed(2)}
-              </button>
-            </div>
+          
+              
+            
           </div>
         </>
       )}
+      <CheckoutModal cart={cart} isOpen={isCheckoutModal} onClose={() => setCheckoutModal(false)} />
+
     </div>
+
+    
   );
 }
 
