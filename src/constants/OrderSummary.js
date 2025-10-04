@@ -26,7 +26,7 @@ const itemsHTML = cart.map(item => `
   </tr>
 `
 ).join(""); // join all rows into one string
-    const total = (cart || []).reduce((s, item) => s + item.price * item.quantity, 0);
+const total = (cart || []).reduce((s, item) => s + item.price * item.quantity, 0);
 
     const templateParams = {
         order_id: generateOrderId(),
