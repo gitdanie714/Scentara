@@ -102,7 +102,7 @@ const [isSending, setIsSending] = useState(false);
             disabled={isSending}
             className="w-1/2 py-3 bg-[#66021f] text-[#FFF9FB] font-semibold rounded-lg shadow hover:bg-[#440116] transition duration-200 disabled:opacity-60"
           >
-            {isSending ? "Processing..." : "Pay Now"}
+            {isSending ? "Processing..." : "Confirm Order"}
           </button>
         </div>
       </div>
