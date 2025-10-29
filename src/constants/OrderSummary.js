@@ -57,7 +57,7 @@ const total = (cart || []).reduce((s, item) => s + item.price * item.quantity, 0
             emailjs.init(publicKey);
         }
     } catch (initErr) {
-        console.warn('emailjs.init failed', initErr);q
+        console.warn('emailjs.init failed', initErr);
     }
 
     try {
