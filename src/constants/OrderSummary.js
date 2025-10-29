@@ -44,10 +44,7 @@ const total = (cart || []).reduce((s, item) => s + item.price * item.quantity, 0
 
     // Debug: show values in browser console (remove in production)
     console.debug('EmailJS config', { serviceId, templateId, publicKey });
-    console.log("Service:", serviceId);
-    console.log("Template:", templateId);
-    console.log("Public:", publicKey);
-
+    
 
 
     if (!serviceId || !templateId || !publicKey) {
@@ -60,7 +57,7 @@ const total = (cart || []).reduce((s, item) => s + item.price * item.quantity, 0
             emailjs.init(publicKey);
         }
     } catch (initErr) {
-        console.warn('emailjs.init failed', initErr);
+        console.warn('emailjs.init failed', initErr);q
     }
 
     try {
